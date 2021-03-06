@@ -83,3 +83,8 @@ fi
 apt -y autoremove
 apt -y clean
 
+#enable IMX477 DISABLE IMX219
+cd /opt/
+wget geekymind.de/jetson/libnvodm_imager.so
+cp libnvodm_imager.so /usr/lib/aarch64-linux-gnu/tegra/libnvodm_imager.so
+
