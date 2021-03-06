@@ -7,6 +7,13 @@
 # Remove bad and unnecessary symlinks 
 rm /lib/modules/*/build || true
 rm /lib/modules/*/source || true
+#mymods
+rm /etc/apt/sources.list.d/nvidia-l4t-apt-source.list || true
+username=openhd2
+password=openhd2
+adduser --gecos "" --disabled-password $username
+chpasswd <<<"$username:$password"
+usermod -aG sudo openhd2
 
 
 if [ "${APT_CACHER_NG_ENABLED}" == "true" ]; then
@@ -50,7 +57,9 @@ curl -1sLf 'https://dl.cloudsmith.io/public/openhd/openhd-2-1/cfg/gpg/gpg.0AD501
 curl -1sLf 'https://dl.cloudsmith.io/public/openhd/openhd-2-1-testing/cfg/gpg/gpg.58A6C96C088A96BF.key' | apt-key add -
 
 
-echo "deb https://dl.cloudsmith.io/public/openhd/openhd-2-1/deb/${OS} ${DISTRO} main" > /etc/apt/sources.list.d/openhd-2-1.list
+    echo "deb https://dl.cloudsmith.io/public/openhd/openhd-2-1-testing/deb/${OS} ${DISTRO} main" > /etc/apt/sources.list.d/openhd-2-1-testing.list
+    echo "deb https://repo.download.nvidia.com/jetson/common r32.4 main" > /etc/apt/sources.list.d/nvidia-l4t-apt-source2.list
+    echo "deb https://repo.download.nvidia.com/jetson/t210 r32.4 main" > /etc/apt/sources.list.d/nvidia-l4t-apt-source.list
 
 if [[ "${TESTING}" == "true" ]]; then
     echo "deb https://dl.cloudsmith.io/public/openhd/openhd-2-1-testing/deb/${OS} ${DISTRO} main" > /etc/apt/sources.list.d/openhd-2-1-testing.list
